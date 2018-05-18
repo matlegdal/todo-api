@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 
 // Activates debug mode
 mongoose.set("debug", true);

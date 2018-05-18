@@ -1,12 +1,14 @@
-const express = require("express"),
+var express = require("express"),
     app = express();
+
+var todoRoutes = require("./routes/todos");
 
 // Routes
 app.get("/", function (req, res) {
-    res.json({
-        message: "Hi from JSON"
-    });
+    res.send("Hello from the root route");
 });
+
+app.use("/api/todos", todoRoutes);
 
 // Start server
 app.listen(3000, "127.0.0.1", function () {
