@@ -50,4 +50,15 @@ router.put("/:todoId", function (req, res) {
         });
 });
 
+// DELETE ROUTE
+router.delete("/:todoId", function (req, res) {
+    db.Todo.findByIdAndRemove(req.params.todoId)
+        .then(function () {
+            res.status(200).send();
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+});
+
 module.exports = router;
