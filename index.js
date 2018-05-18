@@ -1,16 +1,5 @@
 const express = require("express"),
-    mongoose = require('mongoose'),
     app = express();
-
-
-//Set up default mongoose connection
-mongoose.connect('mongodb://localhost:27017/todos-spa');
-// Get Mongoose to use the global promise library
-mongoose.Promise = global.Promise;
-//Get the default connection
-const db = mongoose.connection;
-//Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Routes
 app.get("/", function (req, res) {
