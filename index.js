@@ -9,10 +9,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use("/api/todos", todoRoutes);
+app.use(express.static(__dirname + "/views"));
+app.use(express.static(__dirname + "/public"));
 
 // Routes
 app.get("/", function (req, res) {
-    res.send("Hello from the root route");
+    res.sendFile("index.html");
 });
 
 // Start server
