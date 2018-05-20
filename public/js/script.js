@@ -1,6 +1,7 @@
 require([
     "dojo/dom",
     "dojo/dom-construct",
+    "dojo/dom-class",
     "dojo/request",
     "dojo/_base/array",
     "dojo/on",
@@ -9,7 +10,7 @@ require([
     "dojo/store/Memory",
     "dojo/NodeList-dom",
     "dojo/domReady!"
-], function (dom, domConstruct, request, dojoArray, on, query, keys, Memory) {
+], function (dom, domConstruct, domClass, request, dojoArray, on, query, keys, Memory) {
     var list = dom.byId("todo-list");
     var store = new Memory();
 
@@ -26,6 +27,7 @@ require([
         // store the id and the node in the memory
         store.put({
             id: todo._id,
+            completed: todo.completed,
             node: li
         });
     }
@@ -64,16 +66,40 @@ require([
         }
     });
 
+    // toggle completion of the task on click
+    on(list, ".task:click", function (event) {
+        // check the target first --> don't know how event delegation is handled in dojo, 
+        // but stop propagation doesn't work, so this is a work around.
+        if (event.target.nodeName === "SPAN") {
+            return;
+        } else {
+            // retrieve the data in Memory
+            var data = store.query({ node: this })[0];
+            // send the put request and update the dom
+            request.put(`/api/todos/${data.id}`, {
+                data: {
+                    completed: !data.completed
+                },
+                handleAs: "json"
+            }).then(function () {
+                data.completed = !data.completed;
+                domClass.toggle(data.node, "done");
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    });
+
     // delete a todo with event delegation
     on(list, ".btn-delete:click", function () {
         // retrieve the data from the memory
         var data = store.query({ node: this.parentNode })[0];
-        // send the delete request
+        // send the delete request and update the dom
         request.del(`/api/todos/${data.id}`, {
             handleAs: "json"
-        }).then(function(){
+        }).then(function () {
             domConstruct.destroy(data.node);
-        }).catch(function(err){
+        }).catch(function (err) {
             console.log(err);
         });
     });
