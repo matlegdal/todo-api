@@ -33,8 +33,5 @@ module.exports = {
                 allow: ["log"]
             }
         ]
-    },
-    "plugins": [
-        "html"
-    ]
+    }
 };
