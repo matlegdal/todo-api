@@ -11,15 +11,15 @@ require([
     "dojo/NodeList-dom",
     "dojo/domReady!"
 ], function (dom, domConstruct, domClass, request, dojoArray, on, query, keys, Memory) {
-    var list = dom.byId("todo-list");
-    var store = new Memory();
+    const list = dom.byId("todo-list");
+    const store = new Memory();
 
     function addTodo(todo) {
-        var className = "task";
+        let className = "task";
         if (todo.completed) {
             className += " done";
         }
-        var li = domConstruct.create("li", {
+        let li = domConstruct.create("li", {
             innerHTML: `${todo.name} <span class="btn-delete">X</span>`,
             className: className
         }, list);
@@ -45,11 +45,11 @@ require([
     });
 
     // When a new todo is entered, adds it to db and to the dom
-    var todoInput = dom.byId("todoInput");
+    const todoInput = dom.byId("todoInput");
     on(todoInput, "keydown", function (event) {
         if (event.keyCode === keys.ENTER && todoInput.value !== "") {
             // take the value of the input, then clear the input field
-            var todoValue = todoInput.value;
+            let todoValue = todoInput.value;
             todoInput.value = "";
 
             // make the post request and update the todo list in the dom
@@ -74,7 +74,7 @@ require([
             return;
         } else {
             // retrieve the data in Memory
-            var data = store.query({ node: this })[0];
+            let data = store.query({ node: this })[0];
             // send the put request and update the dom
             request.put(`/api/todos/${data.id}`, {
                 data: {
@@ -93,7 +93,7 @@ require([
     // delete a todo with event delegation
     on(list, ".btn-delete:click", function () {
         // retrieve the data from the memory
-        var data = store.query({ node: this.parentNode })[0];
+        let data = store.query({ node: this.parentNode })[0];
         // send the delete request and update the dom
         request.del(`/api/todos/${data.id}`, {
             handleAs: "json"
