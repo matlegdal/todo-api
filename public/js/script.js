@@ -8,9 +8,10 @@ require([
     "dojo/query",
     "dojo/keys",
     "dojo/store/Memory",
+    "dijit/form/Button",
     "dojo/NodeList-dom",
     "dojo/domReady!"
-], function (dom, domConstruct, domClass, request, dojoArray, on, query, keys, Memory) {
+], function (dom, domConstruct, domClass, request, dojoArray, on, query, keys, Memory, Button) {
     const list = dom.byId("todo-list");
     const store = new Memory();
 
@@ -74,8 +75,10 @@ require([
             return;
         } else {
             // retrieve the data in Memory
-            let data = store.query({ node: this })[0];
-            // send the put request and update the dom
+            let data = store.query({
+                node: this
+            })[0];
+            // send the put request and update the dom and update in memory
             request.put(`/api/todos/${data.id}`, {
                 data: {
                     completed: !data.completed
@@ -93,12 +96,32 @@ require([
     // delete a todo with event delegation
     on(list, ".btn-delete:click", function () {
         // retrieve the data from the memory
-        let data = store.query({ node: this.parentNode })[0];
-        // send the delete request and update the dom
+        let data = store.query({
+            node: this.parentNode
+        })[0];
+        // send the delete request and update the dom and remove from memory
         request.del(`/api/todos/${data.id}`, {
             handleAs: "json"
         }).then(function () {
             domConstruct.destroy(data.node);
+            store.remove(data.id);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    });
+
+    // Add a dijit button to clear all todos
+    var btnReset = new Button({
+        label: "Clear all todos"
+    }, "btn-reset");
+    btnReset.startup();
+
+    on(btnReset, "click", function () {
+        request.del("/api/todos", {
+            handleAs: "json"
+        }).then(function () {
+            domConstruct.empty(list);
+            store.setData([]);
         }).catch(function (err) {
             console.log(err);
         });

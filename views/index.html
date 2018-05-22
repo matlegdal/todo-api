@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Todo Single page App</title>
+    <title>Todo Single page App with dijit</title>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
+<body class="claro">
     <header>
         <h1>todo
             <span>list</span>
@@ -23,6 +24,11 @@
 
     <ul id="todo-list" class="list">
     </ul>
+
+    <div class="centered">
+        <button id="btn-reset"></button>
+    </div>
+
 
     <script src="js/dojo/dojo.js" data-dojo-config="async: true"></script>
     <script src="js/script.js"></script>

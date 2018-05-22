@@ -4,7 +4,8 @@ var express = require("express"),
 
 router.route("/")
     .get(controllers.indexTodos)
-    .post(controllers.createTodo);
+    .post(controllers.createTodo)
+    .delete(controllers.deleteAllTodos);
 
 router.route("/:todoId")
     .get(controllers.showTodo)

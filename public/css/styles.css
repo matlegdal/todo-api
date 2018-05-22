@@ -29,7 +29,7 @@ header h2 {
 /*****************************FORM STYLES*****************************/
 
 .form {
-    width: 800px;
+    width: 80%;
     margin: 50px auto 20px;
 }
 
@@ -48,7 +48,7 @@ header h2 {
 /*****************************LIST STYLES*****************************/
 
 .list {
-    width: 800px;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -85,4 +85,13 @@ li span {
 
 li span:hover {
     color: #e74c3c
+}
+
+.centered {
+    width: 80%;
+    margin: 2em auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
 }

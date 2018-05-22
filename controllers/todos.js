@@ -54,5 +54,15 @@ exports.deleteTodo = function (req, res) {
         });
 };
 
+exports.deleteAllTodos = function (req, res) {
+    db.Todo.deleteMany({})
+        .then(function () {
+            res.status(200).send();
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+};
+
 
 module.exports = exports;
