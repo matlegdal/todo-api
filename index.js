@@ -18,6 +18,6 @@ app.get("/", function (req, res) {
 });
 
 // Start server
-app.listen(3000, "127.0.0.1", function () {
-    console.log("Server started on 127.0.0.1:3000");
+app.listen(8080, "127.0.0.1", function () {
+    console.log("Server started on 127.0.0.1:8080");
 });
